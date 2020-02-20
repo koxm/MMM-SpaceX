@@ -31,9 +31,9 @@ var config = {
 
 | Option           | Description
 |----------------- |-----------
-| `records`        | *Optional* The number of lines you want to show
-| `modus`          | *Optional* Past for past launches, Upcoming for future launches
-| `showLaunchSite` | *Optional* Do you want to show the launchsite (true) or not<br>*Default:* true
+| `records`        | *Optional* - The number of lines you want to show <br>*Default:* 5
+| `modus`          | *Optional* - 'Past' for past launches, 'Upcoming' for future launches <br>*Default:* past
+| `showLaunchSite` | *Optional* - Do you want to show the launchsite (true) or not (false) <br>*Default:* true
 
 ## Screenshot
 
