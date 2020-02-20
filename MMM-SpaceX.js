@@ -143,7 +143,6 @@ Module.register("MMM-SpaceX", {
 		apiRequest.onreadystatechange = function () {
 			if (this.readyState === 4) {
 				if (this.status === 200) {
-					console.log("MICHELKOX: API Call gelukt: " + url);
 					self.processSpaceX(JSON.parse(this.response));
 				}
 				else if (this.status === 401) {
@@ -162,9 +161,7 @@ Module.register("MMM-SpaceX", {
 		apiRequest.send();
 	},
 
-	/* processSpaceX(data)
-	 * Uses the received data to set the various values.
-	 */
+	// processSpaceX
 	processSpaceX: function (data) {
 		this.spacex = data;
 
@@ -173,11 +170,7 @@ Module.register("MMM-SpaceX", {
 		this.updateDom(this.config.animationSpeed);
 	},
 
-	/* scheduleUpdate()
-	 * Schedule next update.
-	 *
-	 * argument delay number - Milliseconds before next update. If empty, this.config.updateInterval is used.
-	 */
+	// Schedule next update.
 	scheduleUpdate: function (delay) {
 		var nextLoad = this.config.updateInterval;
 		if (typeof delay !== "undefined" && delay >= 0) {
