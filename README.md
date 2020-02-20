@@ -37,6 +37,6 @@ var config = {
 
 ## Screenshot
 
-Simple screenshot
+This is a screenshot with zoom level 3
 
-https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png
+![Screenshot on zoom level 3](https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png)
