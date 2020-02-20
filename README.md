@@ -23,8 +23,8 @@ var config = {
                 records: 8,
                 modus: "past",
                 showLaunchSite: false,
-			  }
-		},
+	    }
+	},
     ]
 }
 ```
