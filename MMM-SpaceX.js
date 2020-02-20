@@ -20,19 +20,16 @@ Module.register("MMM-SpaceX", {
 
 	// Define required scripts.
 	getScripts: function () {
-		console.log("MICHELKOX: getScripts Start");
 		return ["moment.js"];
 	},
 
 	// Define required stylescripts.
 	getStyles: function () {
-		console.log("MICHELKOX: getStyles Start");
 		return ["MMM-SpaceX.css", "font-awesome.css"];
 	},
 
 	// Define start sequence.
 	start: function () {
-		console.log("MICHELKOX: start function Start");
 		Log.info("Starting module: " + this.name);
 
 		// Set locale.
@@ -48,7 +45,6 @@ Module.register("MMM-SpaceX", {
 
 	// Override dom generator.
 	getDom: function () {
-		console.log("MICHELKOX: getDom Start");
 		var i = 0;
 		var wrapper = document.createElement("div");
 
@@ -123,15 +119,12 @@ Module.register("MMM-SpaceX", {
 
 	// Override getHeader method.
 	getHeader: function () {
-		console.log("MICHELKOX: getHeader Start");
 		this.data.header = this.config.headerText + ": " + this.config.modus.toUpperCase() + " LAUNCHES";
 		return this.data.header;
 	},
 
 	// Requests new data from SpaceX Api.
 	updateSpaceXData: function () {
-		console.log("MICHELKOX: updateSpaceXData Start");
-
 		var endpoint = "";
 		var sort = "";
 		if (this.config.modus === "upcoming") {
@@ -173,8 +166,6 @@ Module.register("MMM-SpaceX", {
 	 * Uses the received data to set the various values.
 	 */
 	processSpaceX: function (data) {
-		console.log("MICHELKOX: processSpaceX Start");
-
 		this.spacex = data;
 
 		this.show(this.config.animationSpeed, { lockString: this.identifier });
@@ -188,7 +179,6 @@ Module.register("MMM-SpaceX", {
 	 * argument delay number - Milliseconds before next update. If empty, this.config.updateInterval is used.
 	 */
 	scheduleUpdate: function (delay) {
-		console.log("MICHELKOX: scheduleUpdate Start");
 		var nextLoad = this.config.updateInterval;
 		if (typeof delay !== "undefined" && delay >= 0) {
 			nextLoad = delay;
