@@ -4,8 +4,6 @@ This is a module for [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
 This module will show all recent of future launches bases on the SpaceX API. 
 
-**Note:** Since this module uses [Buienradar](https://www.buienradar.nl), it'll only work for locations in the Netherlands & Belgium
-
 ## Installation
 1. Navigate to your MagicMirror's modules folder, and run the following command: `git clone https://github.com/koxm/MMM-SpaceX.git`
 2. Add the module and a valid configuration to your `config/config.js` file
@@ -41,4 +39,4 @@ var config = {
 
 Simple screenshot
 
-!(https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png)
+https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png
