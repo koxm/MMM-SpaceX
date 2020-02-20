@@ -41,4 +41,4 @@ var config = {
 
 Simple screenshot
 
-![Screenshot on zoom level 3](https://github.com/StefanNienhuis/MMM-Buienradar/raw/master/Screenshot.png)
+!(https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png)
