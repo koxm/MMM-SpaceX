@@ -21,6 +21,7 @@ var config = {
                 records: 8,
                 modus: "past",
                 showExtraInfo: false,
+		showColumnHeader: true,
 	    }
 	},
     ]
@@ -29,11 +30,12 @@ var config = {
 
 ## Configuration options
 
-| Option           | Description
-|----------------- |-----------
-| `records`        | *Optional* - The number of lines you want to show <br>*Default:* 5
-| `modus`          | *Optional* - 'past' for past launches, 'upcoming' for future launches <br>*Default:* past
-| `showExtraInfo`  | *Optional* - Do you want to show the launchsite (true) or not (false) <br>*Default:* false
+| Option            | Description
+|-------------------|--------------------------------------------
+| `records`         | *Optional* - The number of lines you want to show <br>*Default:* 5
+| `modus`           | *Optional* - 'past' for past launches, 'upcoming' for future launches <br>*Default:* past
+| `showExtraInfo`   | *Optional* - Do you want to show the launchsite (true) or not (false) <br>*Default:* false
+| `showColumnHeader`| *Optional* - Choose if you want to see columnheadings <br>*Default:* false
 
 ## Good to know
 1. In small mode, the columns are as follows: Agency, Mission, Launche Date and Rocket. The extra info option gives you the Launch Site, Payload and Orbit extra on screen.
