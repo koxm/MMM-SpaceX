@@ -8,6 +8,7 @@ Module.register("MMM-SpaceX", {
 		records: 5,
 		modus: "past",
 		showExtraInfo: false,
+		showColumnHeader: false,
 		initialLoadDelay: 2500,
 		retryDelay: 2500,
 		headerText: "SpaceX Flight Data",
@@ -65,6 +66,10 @@ Module.register("MMM-SpaceX", {
 
 		var table = document.createElement("table");
 		table.className = this.config.tableClass;
+
+		if (this.config.showColumnHeader) {
+			table.appendChild(this.getTableHeaderRow());
+		}
 
 		for (var s in this.spacex) {
 			var spacex = this.spacex[s];
@@ -199,5 +204,40 @@ Module.register("MMM-SpaceX", {
 		this.updateTimer = setTimeout(function () {
 			self.updateSpaceXData();
 		}, nextLoad);
+	},
+
+	getTableHeaderRow: function () {
+		var thDummy = document.createElement("th");
+		thDummy.appendChild(document.createTextNode(" "));
+		var thCustomer = document.createElement("th");
+		thCustomer.appendChild(document.createTextNode("Agency"));
+		var thMission = document.createElement("th");
+		thMission.appendChild(document.createTextNode("Mission Name"));
+		var thLaunchSite = document.createElement("th");
+		thLaunchSite.appendChild(document.createTextNode("Launch Site"));
+		var thPayload = document.createElement("th");
+		thPayload.appendChild(document.createTextNode("Payload"));
+		var thOrbit = document.createElement("th");
+		thOrbit.appendChild(document.createTextNode("Orbit"));
+		var thLaunchDate = document.createElement("th");
+		thLaunchDate.appendChild(document.createTextNode("Launch Date"));
+		var thRocket = document.createElement("th");
+		thRocket.appendChild(document.createTextNode("Rocket"));
+
+		var thead = document.createElement("thead");
+		thead.appendChild(document.createElement("th"));
+		thead.appendChild(thDummy);
+		thead.appendChild(thCustomer);
+		thead.appendChild(thDummy);
+		thead.appendChild(thMission);
+		if (this.config.showExtraInfo) {
+			thead.appendChild(thLaunchSite);
+			thead.appendChild(thPayload);
+			thead.appendChild(thOrbit);
+		}
+		thead.appendChild(thLaunchDate);
+		thead.appendChild(thRocket);
+
+		return thead;
 	},
 });
