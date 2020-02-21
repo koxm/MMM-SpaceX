@@ -36,7 +36,7 @@ var config = {
 | `showExtraInfo`  | *Optional* - Do you want to show the launchsite (true) or not (false) <br>*Default:* false
 
 ## Good to know
-1. The extra info option gives you the launch site, payload and orbit extra on screen.
+1. In small mode, the columns are as follows: Agency, Mission, Launche Date and Rocket. The extra info option gives you the Launch Site, Payload and Orbit extra on screen.
 
 2. There are a few abbreviations used to save space on the screen, especially in the case of a small region. The following abbreviations are useful to know:
 - VLEO = [Very Low Earth Orbit](https://en.wikipedia.org/wiki/Low_Earth_orbit)
