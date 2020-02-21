@@ -56,6 +56,8 @@ var config = {
 
 ## Screenshot
 
-This is a simple screenshot
-
+This is a screenshot with extra info on false. Looks best on a left or right region. 
 ![Screenshot](https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%201.png)
+
+This is a screenshot with extra info on true. Looks better on a wider region, for example middle_center of bottom_bar.
+![Screenshot](https://github.com/koxm/MMM-SpaceX/blob/master/Screenshot%202.png)
