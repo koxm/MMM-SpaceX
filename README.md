@@ -2,7 +2,7 @@
 
 This is a module for [MagicMirror²](https://github.com/MichMich/MagicMirror/).
 
-This module will show all recent of future launches bases on the SpaceX API. I'm still working on expanding the module with additional information and options. If you have nice ideas, then you should certainly pass them on.
+This module will show all recent or future launches bases on the SpaceX API. I'm still working on expanding the module with additional information and options. If you have nice ideas, then you should certainly pass them on.
 
 ## Installation
 1. Navigate to your MagicMirror's modules folder, and run the following command: `git clone https://github.com/koxm/MMM-SpaceX.git`
