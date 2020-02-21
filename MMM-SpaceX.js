@@ -7,7 +7,7 @@ Module.register("MMM-SpaceX", {
 		lang: config.language,
 		records: 5,
 		modus: "past",
-		showLaunchSite: false,
+		showExtraInfo: false,
 		initialLoadDelay: 2500,
 		retryDelay: 2500,
 		headerText: "SpaceX Flight Data",
@@ -25,7 +25,7 @@ Module.register("MMM-SpaceX", {
 
 	// Define required stylescripts.
 	getStyles: function () {
-		return ["MMM-SpaceX.css", "font-awesome.css"];
+		return ["MMM-SpaceX.css"];
 	},
 
 	// Define start sequence.
@@ -77,7 +77,12 @@ Module.register("MMM-SpaceX", {
 			launch.appendChild(customerIcon);
 
 			var customer = document.createElement("td");
-			customer.innerHTML = spacex.rocket.second_stage.payloads[0].customers[0];
+			var cust = spacex.rocket.second_stage.payloads[0].customers[0];
+			if (cust.length > 12) {
+				customer.innerHTML = cust.slice(0, 12) + "...";
+			} else {
+				customer.innerHTML = cust;
+			}
 			launch.appendChild(customer);
 
 			var missionIcon = document.createElement("td");
@@ -92,6 +97,20 @@ Module.register("MMM-SpaceX", {
 			}
 			launch.appendChild(mission);
 
+			if (this.config.showExtraInfo) {
+				var launchSite = document.createElement("td");
+				launchSite.innerHTML = spacex.launch_site.site_name;
+				launch.appendChild(launchSite);
+
+				var payload = document.createElement("td");
+				payload.innerHTML = spacex.rocket.second_stage.payloads[0].payload_type;
+				launch.appendChild(payload);
+
+				var orbit = document.createElement("td");
+				orbit.innerHTML = spacex.rocket.second_stage.payloads[0].orbit;
+				launch.appendChild(orbit);
+			}
+
 			var launchDate = document.createElement("td");
 			var unixLaunchDate = new Date(spacex.launch_date_unix * 1000);
 			var localLaunchDate = unixLaunchDate.toUTCString().slice(5, 16);
@@ -101,17 +120,6 @@ Module.register("MMM-SpaceX", {
 			var rocket = document.createElement("td");
 			rocket.innerHTML = spacex.rocket.rocket_name;
 			launch.appendChild(rocket);
-
-			if (this.config.showLaunchSite) {
-				var launchSiteRow = document.createElement("tr");
-				table.appendChild(launchSiteRow);
-
-				var launchSite = document.createElement("td");
-				launchSite.colSpan = 6;
-				launchSite.className = "lastRow";
-				launchSite.innerHTML = spacex.launch_site.site_name_long;
-				launchSiteRow.appendChild(launchSite);
-			}
 		}
 
 		return table;
@@ -119,7 +127,7 @@ Module.register("MMM-SpaceX", {
 
 	// Override getHeader method.
 	getHeader: function () {
-		this.data.header = this.config.headerText + ": " + this.config.modus.toUpperCase() + " LAUNCHES";
+		this.data.header = this.config.headerText + " - " + this.config.modus.toUpperCase() + " LAUNCHES";
 		return this.data.header;
 	},
 
