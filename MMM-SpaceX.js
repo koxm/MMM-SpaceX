@@ -48,6 +48,15 @@ Module.register("MMM-SpaceX", {
 		var i = 0;
 		var wrapper = document.createElement("div");
 
+		var shortDesc = true;
+		switch (this.data.position) {
+			case "top_bar":
+			case "bottom_bar":
+			case "middle_center":
+				shortDesc = false;;
+				break;
+		}
+
 		if (!this.loaded) {
 			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
@@ -78,7 +87,7 @@ Module.register("MMM-SpaceX", {
 
 			var customer = document.createElement("td");
 			var cust = spacex.rocket.second_stage.payloads[0].customers[0];
-			if (cust.length > 12) {
+			if (cust.length > 12 && shortDesc == true) {
 				customer.innerHTML = cust.slice(0, 12) + "...";
 			} else {
 				customer.innerHTML = cust;
@@ -90,7 +99,7 @@ Module.register("MMM-SpaceX", {
 			launch.appendChild(missionIcon);
 
 			var mission = document.createElement("td");
-			if (spacex.mission_name.length > 12) {
+			if (spacex.mission_name.length > 12 && shortDesc == true) {
 				mission.innerHTML = spacex.mission_name.slice(0, 12) + "...";
 			} else {
 				mission.innerHTML = spacex.mission_name;
