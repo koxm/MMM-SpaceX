@@ -70,14 +70,17 @@ Module.register("MMM-SpaceX", {
 				table.appendChild(this.getTableHeaderRow());
 			}
 
-			for (var i = 0; i < this.spacex.length; i++) {
-				var spacex = this.spacex[i];
+			this.spacex.forEach((spacex) => {
 
 				var launch = document.createElement("tr");
 				table.appendChild(launch);
 
 				var logo = "";
-				var cust = spacex.payloads[0].customers[0];
+				var cust = "";
+
+				if(spacex.payloads[0]) {
+					cust = spacex.payloads[0].customers[0];
+				}
 
 				if (cust.includes("SpaceX")) {
 					logo = this.config.spacexlogo;
@@ -134,9 +137,9 @@ Module.register("MMM-SpaceX", {
 				var rocket = document.createElement("td");
 				rocket.innerHTML = spacex.rocket.name;
 				launch.appendChild(rocket);
-			}
+			});
 		} catch(e) {
-			wrapper.innerHTML = e.message;
+			wrapper.innerHTML = e.stack;
 			wrapper.className = "dimmed light small";
 			return wrapper;
 		}
