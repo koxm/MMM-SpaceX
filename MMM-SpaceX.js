@@ -127,6 +127,8 @@ Module.register("MMM-SpaceX", {
 						orbit.innerHTML = spacex.payloads[0].orbit;
 						launch.appendChild(orbit);
 					}
+				} else {
+					Log.error('Missing info for:' + JSON.stringify(spacex, null, 2));
 				}
 
 				var launchDate = document.createElement("td");
