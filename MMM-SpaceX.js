@@ -114,7 +114,7 @@ Module.register("MMM-SpaceX", {
 
 				if (this.config.showExtraInfo) {
 					var launchSite = document.createElement("td");
-					launchSite.innerHTML = spacex.lauchpad.name;
+					launchSite.innerHTML = spacex.launchpad.name;
 					launch.appendChild(launchSite);
 
 					var payload = document.createElement("td");
@@ -137,6 +137,8 @@ Module.register("MMM-SpaceX", {
 			}
 		} catch(e) {
 			wrapper.innerHTML = e.message;
+			wrapper.className = "dimmed light small";
+			return wrapper;
 		}
 
 		return table;
