@@ -6,7 +6,7 @@ Module.register("MMM-SpaceX", {
 		animationSpeed: 1000,
 		lang: config.language,
 		records: 5,
-		modus: "past",
+		modus: "upcoming",
 		showExtraInfo: false,
 		showColumnHeader: false,
 		initialLoadDelay: 2500,
@@ -41,12 +41,10 @@ Module.register("MMM-SpaceX", {
 		this.scheduleUpdate(this.config.initialLoadDelay);
 
 		this.updateTimer = null;
-
 	},
 
 	// Override dom generator.
 	getDom: function () {
-		var i = 0;
 		var wrapper = document.createElement("div");
 
 		var shortDesc = true;
@@ -202,17 +200,18 @@ Module.register("MMM-SpaceX", {
 		});
 
 		var apiRequest = new XMLHttpRequest();
+		Log.info('URL: ' + url);
+		Log.info('Data: ' + data);
 		apiRequest.open("POST", url, true);
 		apiRequest.onreadystatechange = function () {
 			if (this.readyState === 4) {
 				if (this.status === 200) {
+					Log.info("Response: " + this.responseText);
 					self.processSpaceX(JSON.parse(this.response));
-				}
-				else if (this.status === 401) {
+				} else if (this.status === 401) {
 					self.updateDom(self.config.animationSpeed);
 					retry = true;
-				}
-				else {
+				} else {
 					Log.error(self.name + ": Could not load SpaceX data.");
 				}
 
