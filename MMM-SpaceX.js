@@ -12,7 +12,7 @@ Module.register("MMM-SpaceX", {
 		initialLoadDelay: 2500,
 		retryDelay: 2500,
 		headerText: "SpaceX Flight Data",
-		apiBase: "https://api.spacexdata.com/v4",
+		apiBase: "https://api.spacexdata.com/v4/launches/query",
 		tableClass: "small",
 		spacexlogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SpaceX-Logo-Xonly.svg/1280px-SpaceX-Logo-Xonly.svg.png",
 		nasalogo: "https://tinyurl.com/s2ddgbr",
@@ -157,14 +157,24 @@ Module.register("MMM-SpaceX", {
 
 	// Requests new data from SpaceX Api.
 	updateSpaceXData: function () {
-		var url = this.config.apiBase + "/launches/query";
 		var self = this;
 		var retry = true;
 
-		var data = JSON.stringify({"query":{"upcoming":true},"options":{"populate":[{"path":"payloads","select":{"customers":1,"name":1,"type":1,"orbit":1}},{"path":"launchpad","select":{"name":1}},{"path":"rocket","select":{"name":1}}],"limit":5,"sort":{"date_unix":"asc","flight_number":"asc"},"select":{"links.patch":1,"date_unix":1,"name":1}}});
+		var data = JSON.stringify({
+			"query": {"upcoming": true},
+			"options": {
+				"populate": [{
+					"path": "payloads",
+					"select": {"customers": 1, "name": 1, "type": 1, "orbit": 1}
+				}, {"path": "launchpad", "select": {"name": 1}}, {"path": "rocket", "select": {"name": 1}}],
+				"limit": this.config.records,
+				"sort": {"flight_number": "asc"},
+				"select": {"links.patch": 1, "date_unix": 1, "name": 1}
+			}
+		});
 
 		var apiRequest = new XMLHttpRequest();
-		apiRequest.open("POST", url, true);
+		apiRequest.open("POST", this.config.apiBase, true);
 		apiRequest.onreadystatechange = function () {
 			if (this.readyState === 4) {
 				if (this.status === 200) {
