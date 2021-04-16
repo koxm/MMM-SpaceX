@@ -12,7 +12,7 @@ Module.register("MMM-SpaceX", {
 		initialLoadDelay: 2500,
 		retryDelay: 2500,
 		headerText: "SpaceX Flight Data",
-		apiBase: "https://api.spacexdata.com/v4/launches",
+		apiBase: "https://api.spacexdata.com/v4",
 		tableClass: "small",
 		spacexlogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SpaceX-Logo-Xonly.svg/1280px-SpaceX-Logo-Xonly.svg.png",
 		nasalogo: "https://tinyurl.com/s2ddgbr",
@@ -87,7 +87,7 @@ Module.register("MMM-SpaceX", {
 			}
 
 			var customerIcon = document.createElement("td");
-			customerIcon.innerHTML = "<img style='width:1em; height:1em;' src='" + logo + "' />";
+			customerIcon.innerHTML = "<img alt='Customer Logo' style='width:1em; height:1em;' src='" + logo + "' />";
 			launch.appendChild(customerIcon);
 
 			var customer = document.createElement("td");
@@ -99,7 +99,7 @@ Module.register("MMM-SpaceX", {
 			launch.appendChild(customer);
 
 			var missionIcon = document.createElement("td");
-			missionIcon.innerHTML = "<img style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
+			missionIcon.innerHTML = "<img alt='Mission Patch' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
 			launch.appendChild(missionIcon);
 
 			var mission = document.createElement("td");
@@ -146,13 +146,7 @@ Module.register("MMM-SpaceX", {
 
 	// Requests new data from SpaceX Api.
 	updateSpaceXData: function () {
-		if (this.config.modus === "upcoming") {
-			endpoint = "launches/upcoming";
-		} else if (this.config.modus === "past") {
-			endpoint = "launches/past";
-		}
-
-		var url = this.config.apiBase + "/query";
+		var url = this.config.apiBase + "/launches/query";
 		var self = this;
 		var retry = true;
 
@@ -197,8 +191,6 @@ Module.register("MMM-SpaceX", {
 		});
 
 		var apiRequest = new XMLHttpRequest();
-		Log.info('URL: ' + url);
-		Log.info('Data: ' + data);
 		apiRequest.open("POST", url, true);
 		apiRequest.onreadystatechange = function () {
 			if (this.readyState === 4) {
