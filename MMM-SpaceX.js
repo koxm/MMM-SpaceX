@@ -84,7 +84,7 @@ Module.register("MMM-SpaceX", {
 					}
 				]
 
-				if(spacex.payloads) {
+				if(spacex.payloads[0]) {
 					payloadData = spacex.payloads[0];
 				}
 
