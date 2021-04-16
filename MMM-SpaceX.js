@@ -56,83 +56,87 @@ Module.register("MMM-SpaceX", {
 				break;
 		}
 
-		// if (!this.loaded) {
-			wrapper.innerHTML = this.translate("LOADING TEST");
+		if (!this.loaded) {
+			wrapper.innerHTML = this.translate("LOADING");
 			wrapper.className = "dimmed light small";
 			return wrapper;
-		// }
-
-		var table = document.createElement("table");
-		table.className = this.config.tableClass;
-
-		if (this.config.showColumnHeader) {
-			table.appendChild(this.getTableHeaderRow());
 		}
 
-		for (var i = 0; i < this.spacex.length; i++) {
-			var spacex = this.spacex[i];
+		try {
+			var table = document.createElement("table");
+			table.className = this.config.tableClass;
 
-			var launch = document.createElement("tr");
-			table.appendChild(launch);
-
-			var logo = "";
-			var cust = spacex.payloads[0].customers[0];
-
-			if (cust.includes("SpaceX")) {
-				logo = this.config.spacexlogo;
-			} else if (cust.includes("NASA")) {
-				logo = this.config.nasalogo;
-			} else {
-				logo = this.config.anderslogo;
+			if (this.config.showColumnHeader) {
+				table.appendChild(this.getTableHeaderRow());
 			}
 
-			var customerIcon = document.createElement("td");
-			customerIcon.innerHTML = "<img alt='Customer Logo' style='width:1em; height:1em;' src='" + logo + "' />";
-			launch.appendChild(customerIcon);
+			for (var i = 0; i < this.spacex.length; i++) {
+				var spacex = this.spacex[i];
 
-			var customer = document.createElement("td");
-			if (cust.length > 12 && shortDesc === true) {
-				customer.innerHTML = cust.slice(0, 12) + "...";
-			} else {
-				customer.innerHTML = cust;
+				var launch = document.createElement("tr");
+				table.appendChild(launch);
+
+				var logo = "";
+				var cust = spacex.payloads[0].customers[0];
+
+				if (cust.includes("SpaceX")) {
+					logo = this.config.spacexlogo;
+				} else if (cust.includes("NASA")) {
+					logo = this.config.nasalogo;
+				} else {
+					logo = this.config.anderslogo;
+				}
+
+				var customerIcon = document.createElement("td");
+				customerIcon.innerHTML = "<img alt='Customer Logo' style='width:1em; height:1em;' src='" + logo + "' />";
+				launch.appendChild(customerIcon);
+
+				var customer = document.createElement("td");
+				if (cust.length > 12 && shortDesc === true) {
+					customer.innerHTML = cust.slice(0, 12) + "...";
+				} else {
+					customer.innerHTML = cust;
+				}
+				launch.appendChild(customer);
+
+				var missionIcon = document.createElement("td");
+				missionIcon.innerHTML = "<img alt='Mission Patch' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
+				launch.appendChild(missionIcon);
+
+				var mission = document.createElement("td");
+				if (spacex.name.length > 12 && shortDesc === true) {
+					mission.innerHTML = spacex.name.slice(0, 12) + "...";
+				} else {
+					mission.innerHTML = spacex.name;
+				}
+
+				launch.appendChild(mission);
+
+				if (this.config.showExtraInfo) {
+					var launchSite = document.createElement("td");
+					launchSite.innerHTML = spacex.lauchpad.name;
+					launch.appendChild(launchSite);
+
+					var payload = document.createElement("td");
+					payload.innerHTML = spacex.payloads[0].type;
+					launch.appendChild(payload);
+
+					var orbit = document.createElement("td");
+					orbit.innerHTML = spacex.payloads[0].orbit;
+					launch.appendChild(orbit);
+				}
+
+				var launchDate = document.createElement("td");
+				var unixLaunchDate = new Date(spacex.date_unix * 1000);
+				launchDate.innerHTML = unixLaunchDate.toUTCString().slice(5, 16);
+				launch.appendChild(launchDate);
+
+				var rocket = document.createElement("td");
+				rocket.innerHTML = spacex.rocket.name;
+				launch.appendChild(rocket);
 			}
-			launch.appendChild(customer);
-
-			var missionIcon = document.createElement("td");
-			missionIcon.innerHTML = "<img alt='Mission Patch' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
-			launch.appendChild(missionIcon);
-
-			var mission = document.createElement("td");
-			if (spacex.name.length > 12 && shortDesc === true) {
-				mission.innerHTML = spacex.name.slice(0, 12) + "...";
-			} else {
-				mission.innerHTML = spacex.name;
-			}
-
-			launch.appendChild(mission);
-
-			if (this.config.showExtraInfo) {
-				var launchSite = document.createElement("td");
-				launchSite.innerHTML = spacex.lauchpad.name;
-				launch.appendChild(launchSite);
-
-				var payload = document.createElement("td");
-				payload.innerHTML = spacex.payloads[0].type;
-				launch.appendChild(payload);
-
-				var orbit = document.createElement("td");
-				orbit.innerHTML = spacex.payloads[0].orbit;
-				launch.appendChild(orbit);
-			}
-
-			var launchDate = document.createElement("td");
-			var unixLaunchDate = new Date(spacex.date_unix * 1000);
-			launchDate.innerHTML = unixLaunchDate.toUTCString().slice(5, 16);
-			launch.appendChild(launchDate);
-
-			var rocket = document.createElement("td");
-			rocket.innerHTML = spacex.rocket.name;
-			launch.appendChild(rocket);
+		} catch(e) {
+			wrapper.innerHTML = e.message;
 		}
 
 		return table;
@@ -208,6 +212,7 @@ Module.register("MMM-SpaceX", {
 				}
 			}
 		};
+
 		apiRequest.setRequestHeader("Content-Type", "application/json");
 		apiRequest.send(data);
 	},
