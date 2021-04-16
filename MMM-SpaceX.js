@@ -69,8 +69,8 @@ Module.register("MMM-SpaceX", {
 			table.appendChild(this.getTableHeaderRow());
 		}
 
-		for (var s in this.spacex) {
-			var spacex = this.spacex[s];
+		for (var i = 0; i < this.spacex.length; i++) {
+			var spacex = this.spacex[i];
 
 			var launch = document.createElement("tr");
 			table.appendChild(launch);
@@ -127,12 +127,11 @@ Module.register("MMM-SpaceX", {
 
 			var launchDate = document.createElement("td");
 			var unixLaunchDate = new Date(spacex.date_unix * 1000);
-			var localLaunchDate = unixLaunchDate.toUTCString().slice(5, 16);
-			launchDate.innerHTML = localLaunchDate;
+			launchDate.innerHTML = unixLaunchDate.toUTCString().slice(5, 16);
 			launch.appendChild(launchDate);
 
 			var rocket = document.createElement("td");
-			rocket.innerHTML = spacex.rocket.rocket_name;
+			rocket.innerHTML = spacex.rocket.name;
 			launch.appendChild(rocket);
 		}
 
@@ -147,12 +146,10 @@ Module.register("MMM-SpaceX", {
 
 	// Requests new data from SpaceX Api.
 	updateSpaceXData: function () {
-		var sort = "";
 		if (this.config.modus === "upcoming") {
 			endpoint = "launches/upcoming";
 		} else if (this.config.modus === "past") {
 			endpoint = "launches/past";
-			sort = "desc"
 		}
 
 		var url = this.config.apiBase + "/query";
@@ -206,8 +203,7 @@ Module.register("MMM-SpaceX", {
 		apiRequest.onreadystatechange = function () {
 			if (this.readyState === 4) {
 				if (this.status === 200) {
-					Log.info("Response: " + this.responseText);
-					self.processSpaceX(JSON.parse(this.response));
+					self.processSpaceX(JSON.parse(this.response || this.responseText));
 				} else if (this.status === 401) {
 					self.updateDom(self.config.animationSpeed);
 					retry = true;
@@ -220,13 +216,13 @@ Module.register("MMM-SpaceX", {
 				}
 			}
 		};
+		apiRequest.setRequestHeader("Content-Type", "application/json");
 		apiRequest.send(data);
 	},
 
 	// processSpaceX
 	processSpaceX: function (data) {
-		this.spacex = data;
-
+		this.spacex = data.docs;
 		this.show(this.config.animationSpeed, { lockString: this.identifier });
 		this.loaded = true;
 		this.updateDom(this.config.animationSpeed);
