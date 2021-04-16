@@ -90,7 +90,7 @@ Module.register("MMM-SpaceX", {
 					}
 
 					var customerIcon = document.createElement("td");
-					customerIcon.innerHTML = "<img alt='Customer Logo' style='width:1em; height:1em;' src='" + logo + "' />";
+					customerIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + logo + "' />";
 					launch.appendChild(customerIcon);
 
 					var customer = document.createElement("td");
@@ -102,7 +102,7 @@ Module.register("MMM-SpaceX", {
 					launch.appendChild(customer);
 
 					var missionIcon = document.createElement("td");
-					missionIcon.innerHTML = "<img alt='Mission Patch' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
+					missionIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
 					launch.appendChild(missionIcon);
 
 					var mission = document.createElement("td");
@@ -161,45 +161,7 @@ Module.register("MMM-SpaceX", {
 		var self = this;
 		var retry = true;
 
-		var data = JSON.stringify({
-			query: {
-				upcoming: this.config.modus === "upcoming"
-			},
-			options: {
-				populate: [
-					{
-						path: "payloads",
-						select: {
-							customers: 1,
-							name: 1,
-							type: 1,
-							orbit: 1
-						}
-					},
-					{
-						path: "launchpad",
-						select: {
-							name: 1
-						}
-					},
-					{
-						path: "rocket",
-						select: {
-							name: 1
-						}
-					}
-				],
-				limit: this.config.records,
-				sort: {
-					date_unix: this.config.modus === "upcoming" ? "asc" : "desc"
-				},
-				select: {
-					"links.patch": 1,
-					date_unix: 1,
-					name: 1
-				}
-			}
-		});
+		var data = JSON.stringify({"query":{"upcoming":true},"options":{"populate":[{"path":"payloads","select":{"customers":1,"name":1,"type":1,"orbit":1}},{"path":"launchpad","select":{"name":1}},{"path":"rocket","select":{"name":1}}],"limit":5,"sort":{"date_unix":"asc","flight_number":"asc"},"select":{"links.patch":1,"date_unix":1,"name":1}}});
 
 		var apiRequest = new XMLHttpRequest();
 		apiRequest.open("POST", url, true);
