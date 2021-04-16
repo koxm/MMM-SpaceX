@@ -76,18 +76,19 @@ Module.register("MMM-SpaceX", {
 				table.appendChild(launch);
 
 				var logo = "";
-				var cust = "???";
 				var payloadData = [
 					{
-						customers: ["???"],
+						customers: [ "???" ],
 						type: "???",
 						orbit: "???"
 					}
 				]
 
-				if(spacex.payloads[0]) {
+				if(spacex.payloads) {
 					payloadData = spacex.payloads[0];
 				}
+
+				var cust = payloadData.customers.join(', ');
 
 				if (cust.includes("SpaceX")) {
 					logo = this.config.spacexlogo;
@@ -193,7 +194,7 @@ Module.register("MMM-SpaceX", {
 						}
 					}
 				],
-				limit: 1,
+				limit: this.config.records,
 				sort: {
 					flight_number: this.config.modus === "upcoming" ? "asc" : "desc"
 				},
