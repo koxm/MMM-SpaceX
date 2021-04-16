@@ -56,11 +56,11 @@ Module.register("MMM-SpaceX", {
 				break;
 		}
 
-		if (!this.loaded) {
-			wrapper.innerHTML = this.translate("LOADING");
+		// if (!this.loaded) {
+			wrapper.innerHTML = this.translate("LOADING TEST");
 			wrapper.className = "dimmed light small";
 			return wrapper;
-		}
+		// }
 
 		var table = document.createElement("table");
 		table.className = this.config.tableClass;
