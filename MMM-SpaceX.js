@@ -76,59 +76,64 @@ Module.register("MMM-SpaceX", {
 				table.appendChild(launch);
 
 				var logo = "";
-				var cust = "";
+				var cust = "???";
+				var payloadData = [
+					{
+						customers: ["???"],
+						type: "???",
+						orbit: "???"
+					}
+				]
 
 				if(spacex.payloads[0]) {
-					cust = spacex.payloads[0].customers[0];
+					payloadData = spacex.payloads[0];
+				}
 
-					if (cust.includes("SpaceX")) {
-						logo = this.config.spacexlogo;
-					} else if (cust.includes("NASA")) {
-						logo = this.config.nasalogo;
-					} else {
-						logo = this.config.anderslogo;
-					}
-
-					var customerIcon = document.createElement("td");
-					customerIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + logo + "' />";
-					launch.appendChild(customerIcon);
-
-					var customer = document.createElement("td");
-					if (cust.length > 12 && shortDesc === true) {
-						customer.innerHTML = cust.slice(0, 12) + "...";
-					} else {
-						customer.innerHTML = cust;
-					}
-					launch.appendChild(customer);
-
-					var missionIcon = document.createElement("td");
-					missionIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
-					launch.appendChild(missionIcon);
-
-					var mission = document.createElement("td");
-					if (spacex.name.length > 12 && shortDesc === true) {
-						mission.innerHTML = spacex.name.slice(0, 12) + "...";
-					} else {
-						mission.innerHTML = spacex.name;
-					}
-
-					launch.appendChild(mission);
-
-					if (this.config.showExtraInfo) {
-						var launchSite = document.createElement("td");
-						launchSite.innerHTML = spacex.launchpad.name;
-						launch.appendChild(launchSite);
-
-						var payload = document.createElement("td");
-						payload.innerHTML = spacex.payloads[0].type;
-						launch.appendChild(payload);
-
-						var orbit = document.createElement("td");
-						orbit.innerHTML = spacex.payloads[0].orbit;
-						launch.appendChild(orbit);
-					}
+				if (cust.includes("SpaceX")) {
+					logo = this.config.spacexlogo;
+				} else if (cust.includes("NASA")) {
+					logo = this.config.nasalogo;
 				} else {
-					Log.error('Missing info for:' + JSON.stringify(spacex, null, 2));
+					logo = this.config.anderslogo;
+				}
+
+				var customerIcon = document.createElement("td");
+				customerIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + logo + "' />";
+				launch.appendChild(customerIcon);
+
+				var customer = document.createElement("td");
+				if (cust.length > 12 && shortDesc === true) {
+					customer.innerHTML = cust.slice(0, 12) + "...";
+				} else {
+					customer.innerHTML = cust;
+				}
+				launch.appendChild(customer);
+
+				var missionIcon = document.createElement("td");
+				missionIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
+				launch.appendChild(missionIcon);
+
+				var mission = document.createElement("td");
+				if (spacex.name.length > 12 && shortDesc === true) {
+					mission.innerHTML = spacex.name.slice(0, 12) + "...";
+				} else {
+					mission.innerHTML = spacex.name;
+				}
+
+				launch.appendChild(mission);
+
+				if (this.config.showExtraInfo) {
+					var launchSite = document.createElement("td");
+					launchSite.innerHTML = spacex.launchpad ? spacex.launchpad.name : "???";
+					launch.appendChild(launchSite);
+
+					var payload = document.createElement("td");
+					payload.innerHTML = payloadData.type;
+					launch.appendChild(payload);
+
+					var orbit = document.createElement("td");
+					orbit.innerHTML = payloadData.orbit;
+					launch.appendChild(orbit);
 				}
 
 				var launchDate = document.createElement("td");
@@ -137,7 +142,7 @@ Module.register("MMM-SpaceX", {
 				launch.appendChild(launchDate);
 
 				var rocket = document.createElement("td");
-				rocket.innerHTML = spacex.rocket.name;
+				rocket.innerHTML = spacex.rocket ? spacex.rocket.name : "???";
 				launch.appendChild(rocket);
 			});
 		} catch(e) {
@@ -161,15 +166,42 @@ Module.register("MMM-SpaceX", {
 		var retry = true;
 
 		var data = JSON.stringify({
-			"query": {"upcoming": true},
-			"options": {
-				"populate": [{
-					"path": "payloads",
-					"select": {"customers": 1, "name": 1, "type": 1, "orbit": 1}
-				}, {"path": "launchpad", "select": {"name": 1}}, {"path": "rocket", "select": {"name": 1}}],
-				"limit": this.config.records,
-				"sort": {"flight_number": "asc"},
-				"select": {"links.patch": 1, "date_unix": 1, "name": 1}
+			query: {
+				upcoming: true
+			},
+			options: {
+				populate: [
+					{
+						path: "payloads",
+						select: {
+							customers: 1,
+							name: 1,
+							type: 1,
+							orbit: 1
+						}
+					},
+					{
+						path: "launchpad",
+						select: {
+							name: 1
+						}
+					},
+					{
+						path: "rocket",
+						select: {
+							name: 1
+						}
+					}
+				],
+				limit: 1,
+				sort: {
+					flight_number: this.config.modus === "upcoming" ? "asc" : "desc"
+				},
+				select: {
+					"links.patch": 1,
+					date_unix: 1,
+					name: 1
+				}
 			}
 		});
 
