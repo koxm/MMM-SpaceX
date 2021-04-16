@@ -76,13 +76,11 @@ Module.register("MMM-SpaceX", {
 				table.appendChild(launch);
 
 				var logo = "";
-				var payloadData = [
-					{
+				var payloadData = {
 						customers: [ "???" ],
 						type: "???",
 						orbit: "???"
 					}
-				]
 
 				if(spacex.payloads[0]) {
 					payloadData = spacex.payloads[0];
