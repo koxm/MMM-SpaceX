@@ -15,7 +15,7 @@ Module.register("MMM-SpaceX", {
 		apiBase: "https://api.spacexdata.com/v4/launches/query",
 		tableClass: "small",
 		spacexlogo: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/SpaceX-Logo-Xonly.svg/1280px-SpaceX-Logo-Xonly.svg.png",
-		nasalogo: "https://tinyurl.com/s2ddgbr",
+		nasalogo: "https://cdn.iconscout.com/icon/free/png-128/nasa-282190.png",
 		anderslogo: "https://i.pinimg.com/originals/7d/44/1f/7d441fa1467d5e2e92d6b2622455c586.png",
 	},
 
