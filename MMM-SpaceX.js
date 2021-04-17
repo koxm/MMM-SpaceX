@@ -166,7 +166,7 @@ Module.register("MMM-SpaceX", {
 
 		var data = JSON.stringify({
 			query: {
-				upcoming: true
+				upcoming: this.config.modus === "upcoming",
 			},
 			options: {
 				populate: [
