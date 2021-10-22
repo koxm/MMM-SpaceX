@@ -109,7 +109,9 @@ Module.register("MMM-SpaceX", {
 				launch.appendChild(customer);
 
 				var missionIcon = document.createElement("td");
-				missionIcon.innerHTML = "<img alt='' style='width:1em; height:1em;' src='" + spacex.links.patch.small + "' />";
+				var missionIconImgLink = spacex.links.patch.small || spacex.links.patch.large || 'https://icons.iconarchive.com/icons/zairaam/bumpy-planets/64/04-earth-icon.png';
+				missionIcon.innerHTML = "<img alt='' style='width:1em; height:1em;border:0;' src='" + missionIconImgLink + "' />";
+
 				launch.appendChild(missionIcon);
 
 				var mission = document.createElement("td");
